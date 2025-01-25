@@ -45,6 +45,7 @@ class Constants {
 
     static get MESSAGE() {
         return {
+            USER: 'Current user',
             USER_CREATED: 'User created',
             USER_UPDATED: 'User update',
             USER_LOGIN: 'User login',
