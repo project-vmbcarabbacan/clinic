@@ -1,0 +1,30 @@
+{
+  "name": "clinic",
+  "version": "1.0.0",
+  "description": "Clinic system that will have appointment",
+  "main": "main.js",
+  "scripts": {
+    "serve": "nodemon main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/project-vmbcarabbacan/clinic.git"
+  },
+  "author": "Vincent Mark Carabbacan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/project-vmbcarabbacan/clinic/issues"
+  },
+  "homepage": "https://github.com/project-vmbcarabbacan/clinic#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "clinic": "file:",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.5.46",
+    "mongoose": "^8.9.5",
+    "nodemon": "^3.1.9"
+  }
+}
