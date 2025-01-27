@@ -18,4 +18,11 @@ const userInformationSchema = new mongoose.Schema({
     ]
 })
 
+userInformationSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        delete ret.__v;
+    }
+});
+
+
 module.exports = mongoose.model('User_information', userInformationSchema);

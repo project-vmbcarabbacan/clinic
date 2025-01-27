@@ -11,4 +11,10 @@ const userLogSchema = new mongoose.Schema({
     created_at: { type: Date, default: cDate.now() }
 })
 
+userLogSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        delete ret.__v;
+    }
+});
+
 module.exports = mongoose.model('User_log', userLogSchema);

@@ -13,8 +13,15 @@ const userSchema = new mongoose.Schema({
     status: { type: String, default: "Active" },
     image: { type: String },
     role: { type: Number },
-    created_at: { type: Date, default: cDate.now() },
-    updated_at: { type: Date, default: cDate.now() },
+    created_at: { type: String, default: cDate.now() },
+    updated_at: { type: String, default: cDate.now() },
+});
+
+userSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        delete ret.__v;
+        delete ret.password;
+    }
 });
 
 userSchema.pre('save', async function (next) {

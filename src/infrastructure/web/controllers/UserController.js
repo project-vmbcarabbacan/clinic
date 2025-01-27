@@ -21,7 +21,7 @@ class UserController {
 
     async getLoginUser(req, res) {
         const user = await this.loginUserUsecase.execute(req.body.id_user)
-        res.status(Constants.STATUS_CODES.SUCCESS).json({ message: Constants.MESSAGE.USER, user })
+        res.status(Constants.STATUS_CODES.SUCCESS).json({ message: Constants.MESSAGE.USER, data: { user } })
     }
 
     async create(req, res) {

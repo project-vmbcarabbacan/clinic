@@ -9,7 +9,7 @@ class UserRepositoryImpl extends UserRepository {
     }
 
     async findId(id) {
-        const user = await this.userModel.findById(id)
+        const user = await this.userModel.findById(id).select('-password').exec()
         if (!user)
             throw new Error('User not found!')
 
@@ -65,7 +65,7 @@ class UserRepositoryImpl extends UserRepository {
         } catch (error) {
             throw new Error(error.message)
         }
-        }
+    }
 
     async updateInformation(user_id, updateData) {
         try {
@@ -93,11 +93,11 @@ class UserRepositoryImpl extends UserRepository {
             if (userInformation) {
                 userInformation.tokens.push({ token })
                 if (userInformation.tokens.length > 5) {
-                    userInformation.tokens.shift(); 
+                    userInformation.tokens.shift();
                 }
 
                 userInformation.status_type = "Available",
-                await userInformation.save()
+                    await userInformation.save()
             } else {
                 const newInformation = new this.userInformationModel({
                     user_id,
@@ -110,7 +110,7 @@ class UserRepositoryImpl extends UserRepository {
                 })
                 await newInformation.save()
             }
-            
+
         } catch (error) {
             throw new Error(error.message)
         }
@@ -126,7 +126,7 @@ class UserRepositoryImpl extends UserRepository {
 
             userInformation.status_type = "Logout",
 
-            await userInformation.save()
+                await userInformation.save()
         } catch (error) {
             throw new Error(error.message)
         }

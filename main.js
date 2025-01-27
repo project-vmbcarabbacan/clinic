@@ -6,11 +6,24 @@ const Types = require('./src/infrastructure/utils/Types')
 const authRoutes = require('./src/infrastructure/web/routes/AuthRouter')
 const userRoutes = require('./src/infrastructure/web/routes/UserRouter')
 const container = require('./src/infrastructure/di/Container')
+const cors = require('cors')
 
 const auth = container.resolve(Types.MIDDLEWARE.AUTHORIZATION);
 
 const app = express();
 app.use(express.json());
+const corsOptions = {
+    origin: 'http://localhost:8080', // Replace with your Vue app's URL
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+};
+
+app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
+
 
 app.get('/', (req, res) => {
     res.send('Hello, World!');

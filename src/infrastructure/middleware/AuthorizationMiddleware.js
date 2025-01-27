@@ -5,17 +5,20 @@ const userInformationModel = require('../database/models/userInformation')
 class AuthorizationMiddleware {
 
     handle() {
-        return async(req, res, next) => {
-            const authorizationHeader = req.header('Authorization')
+        return async (req, res, next) => {
+            const authorizationHeader = req.header('Cookie')
 
+            console.log({ authorizationHeader })
             if (!authorizationHeader)
                 return res.status(Constants.STATUS_CODES.UNAUTHORIZED).json({ error: Constants.STATUS_MESSAGE.UNAUTHORIZED_TOKEN_MISSING })
 
-            const token = authorizationHeader.replace('Bearer ', '')
+            const token = authorizationHeader.replace('at=', '')
             if (!token)
                 return res.status(Constants.STATUS_CODES.UNAUTHORIZED).json({ error: Constants.STATUS_MESSAGE.UNAUTHORIZED_TOKEN_PROVIDED })
 
             req.token = token
+
+            console.log({ token })
 
             jwt.verify(token, Constants.APPLICATION.ACCESS_TOKEN_SECRET, async (err, user) => {
                 if (err) return res.status(Constants.STATUS_CODES.FORBIDDEN).json({ message: Constants.STATUS_MESSAGE.INVALID })
@@ -24,7 +27,7 @@ class AuthorizationMiddleware {
                     tokens: { $elemMatch: { token } }
                 })
 
-                if(!existToken)
+                if (!existToken)
                     return res.status(Constants.STATUS_CODES.UNAUTHORIZED).json({ error: Constants.STATUS_MESSAGE.UNAUTHORIZED_TOKEN_NOT_VALID })
 
 
