@@ -67,4 +67,18 @@ userSchema.statics.usernameExist = async function (username, id) {
     return user ? true : false
 }
 
+userSchema.virtual('information', {
+    ref: 'User_information',
+    localField:'_id',
+    foreignField: 'user_id',
+    justOne: true
+})
+
+userSchema.virtual('achievements', {
+    ref: 'Achievement',
+    localField:'_id',
+    foreignField: 'user_id',
+    justOne: false
+})
+
 module.exports = mongoose.model('User', userSchema);

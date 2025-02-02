@@ -6,10 +6,15 @@ class AchievementAdd {
     }
 
     async execute(achievementData) {
-        const entity = this.achievementAddEntity
-        entity.setData(achievementData)
+        try {
+            const entity = this.achievementAddEntity
+            entity.setData(achievementData)
+            const filePath = entity.getImage()
 
-        await this.achievementRepository.add(entity)
+            await this.achievementRepository.add(entity.getData(filePath))
+        } catch (error) {
+            throw new Error(error.message);
+        }
     }
 }
 

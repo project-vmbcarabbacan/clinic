@@ -8,7 +8,6 @@ class AuthorizationMiddleware {
         return async (req, res, next) => {
             const authorizationHeader = req.header('Cookie')
 
-            console.log({ authorizationHeader })
             if (!authorizationHeader)
                 return res.status(Constants.STATUS_CODES.UNAUTHORIZED).json({ error: Constants.STATUS_MESSAGE.UNAUTHORIZED_TOKEN_MISSING })
 
@@ -17,8 +16,6 @@ class AuthorizationMiddleware {
                 return res.status(Constants.STATUS_CODES.UNAUTHORIZED).json({ error: Constants.STATUS_MESSAGE.UNAUTHORIZED_TOKEN_PROVIDED })
 
             req.token = token
-
-            console.log({ token })
 
             jwt.verify(token, Constants.APPLICATION.ACCESS_TOKEN_SECRET, async (err, user) => {
                 if (err) return res.status(Constants.STATUS_CODES.FORBIDDEN).json({ message: Constants.STATUS_MESSAGE.INVALID })

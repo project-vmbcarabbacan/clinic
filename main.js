@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express')
+const multer = require('multer');
 const { connectDatabase } = require('./src/infrastructure/database/mongoose')
 const Constants = require('./src/infrastructure/utils/Constants')
 const Types = require('./src/infrastructure/utils/Types')
@@ -11,7 +12,7 @@ const cors = require('cors')
 const auth = container.resolve(Types.MIDDLEWARE.AUTHORIZATION);
 
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 const corsOptions = {
     origin: 'http://localhost:8080', // Replace with your Vue app's URL
     credentials: true,

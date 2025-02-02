@@ -97,7 +97,7 @@ container.register(Types.USECASE.USER_UPDATE, new UserUpdate(container.resolve(T
 container.register(Types.USECASE.UPDATE_ONE, new UpdateOne(container.resolve(Types.REPOSITORY.USER), container.resolve(Types.REPOSITORY.USER_LOG), container.resolve(Types.ENTITY.UPDATE_ONE), container.resolve(Types.ENTITY.USER_LOG)))
 container.register(Types.USECASE.ACHIEVEMENT_ADD, new AchievementAdd(container.resolve(Types.REPOSITORY.ACHIEVEMENT), container.resolve(Types.ENTITY.ACHIEVEMENT_ADD)))
 container.register(Types.USECASE.ACHIEVEMENT_EDIT, new AchievementEdit(container.resolve(Types.REPOSITORY.ACHIEVEMENT), container.resolve(Types.ENTITY.ACHIEVEMENT_EDIT)))
-container.register(Types.USECASE.LOGIN_USER, new LoginUser(container.resolve(Types.REPOSITORY.USER)))
+container.register(Types.USECASE.LOGIN_USER, new LoginUser(container.resolve(Types.REPOSITORY.USER), container.resolve(Types.SERVICE.VALIDATOR)))
 
 /* controllers */
 container.register(Types.CONTROLLER.AUTH, new AuthController(container.resolve(Types.USECASE.LOGIN), container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.LOGOUT), container.resolve(Types.REPOSITORY.USER)))

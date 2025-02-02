@@ -9,7 +9,18 @@ class UserRepositoryImpl extends UserRepository {
     }
 
     async findId(id) {
-        const user = await this.userModel.findById(id).select('-password').exec()
+        const user = await this.userModel.findById(id)
+            .populate({
+                path: 'information',
+                select: '-__v -_id -tokens'
+            })
+            .populate({
+                path: 'achievements',
+                select: '-__v'
+            })
+            .select('-password')
+            .lean()
+
         if (!user)
             throw new Error('User not found!')
 

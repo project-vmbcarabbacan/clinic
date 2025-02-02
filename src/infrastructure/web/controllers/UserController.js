@@ -17,11 +17,21 @@ class UserController {
         this.addAchievement = this.addAchievement.bind(this);
         this.editAchievement = this.editAchievement.bind(this);
         this.getLoginUser = this.getLoginUser.bind(this);
+        this.getUserById = this.getUserById.bind(this);
     }
 
     async getLoginUser(req, res) {
         const user = await this.loginUserUsecase.execute(req.body.id_user)
         res.status(Constants.STATUS_CODES.SUCCESS).json({ message: Constants.MESSAGE.USER, data: { user } })
+    }
+
+    async getUserById(req, res) {
+        try {
+            const user = await this.loginUserUsecase.execute(req.params.user_id)
+            res.status(Constants.STATUS_CODES.SUCCESS).json({ message: Constants.MESSAGE.USER, data: { user } })
+        } catch (error) {
+            res.status(Constants.STATUS_CODES.BAD_REQUEST).json({ message: `${Constants.STATUS_MESSAGE.BAD_REQUEST} : ${error.message}` })
+        }
     }
 
     async create(req, res) {
