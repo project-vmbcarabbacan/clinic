@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const achievementSchema = new mongoose.Schema({
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    title: { type: String, trim: true, lowercase: true },
+    title: { type: String, trim: true },
     description: { type: String },
     date: { type: Date },
     image: { type: String },

@@ -7,9 +7,12 @@ class AchievementRepositoryImpl extends AchievementRepository {
         this.achievementModel = AchievementModel
     }
 
-    async findId(achievement_id) {
+    async findId(user_id, achievement_id) {
         try {
-            const achievement = await this.achievementModel.findById(achievement_id)
+            const achievement = await this.achievementModel.findOne({
+                _id: achievement_id,
+                user_id
+            })
             if (!achievement)
                 throw new Error('Achievement not exists')
 

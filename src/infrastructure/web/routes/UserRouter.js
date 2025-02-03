@@ -9,7 +9,7 @@ const adminRole = container.resolve(Types.MIDDLEWARE.AUTHORIZATION_ROLE).factory
 
 router.get('/current-user', controller.getLoginUser);
 router.get('/user-by-id/:user_id', controller.getUserById);
-router.get('/achievement-by-id/:achievement_id', controller.getAchievement);
+router.get('/achievement-by-id/:user_id/:achievement_id', controller.getAchievement);
 router.post('/create', adminRole.handle(), controller.create);
 router.post('/achievement-add', controller.addAchievement);
 router.patch('/change-:field', adminRole.handle(), controller.updateOneField);

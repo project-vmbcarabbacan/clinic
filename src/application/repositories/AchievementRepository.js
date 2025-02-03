@@ -8,7 +8,7 @@ class AchievementRepository {
         throw new Error("Method 'update()' must be implemented.");
     }
 
-    findId(achievement_id) {
+    findId(user_id, achievement_id) {
         throw new Error("Method 'findId()' must be implemented.");
     }
 

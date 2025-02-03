@@ -4,12 +4,15 @@ class AchievementGet {
         this.validatorService = validatorService
     }
 
-    async execute(id) {
-        const isValid = await this.validatorService.validateId(id)
-        if(!isValid)
-            throw new Error('Invalid id given')
+    async execute(user_id, achievement_id) {
+        const isValidUserId = await this.validatorService.validateId(user_id)
+        if(!isValidUserId)
+            throw new Error('Invalid user id given')
+        const isValidAchievementId = await this.validatorService.validateId(achievement_id)
+        if(!isValidUserId)
+            throw new Error('Invalid achievement id given')
 
-        return await this.achievementRepository.findId(id)
+        return await this.achievementRepository.findId(user_id, achievement_id)
     }
 }
 

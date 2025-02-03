@@ -100,7 +100,7 @@ class UserController {
 
     async getAchievement(req, res) {
         try {
-            const achievement = await this.achievementGet.execute(req.params.achievement_id)
+            const achievement = await this.achievementGet.execute(req.params.user_id, req.params.achievement_id)
             res.status(Constants.STATUS_CODES.SUCCESS).json({ message: Constants.MESSAGE.ACHIEVEMENT_GET, data: { achievement } })
         } catch (error) {
             res.status(Constants.STATUS_CODES.BAD_REQUEST).json({ message: `${Constants.STATUS_MESSAGE.BAD_REQUEST} : ${error.message}` })
