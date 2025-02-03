@@ -52,6 +52,7 @@ class Constants {
             USER_LOGOUT: 'User logout',
             ACHIEVEMENT_ADD: 'Achievement successfully added',
             ACHIEVEMENT_EDIT: 'Achievement successfully updated',
+            ACHIEVEMENT_GET: 'Achievement successfully fetch',
         }
     }
 }

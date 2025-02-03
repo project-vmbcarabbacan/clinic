@@ -47,6 +47,7 @@ class Types {
             UPDATE_ONE: 'update_one_usecase',
             ACHIEVEMENT_ADD: 'achievement_add_usecase',
             ACHIEVEMENT_EDIT: 'achievement_edit_usecase',
+            ACHIEVEMENT_GET: 'achievement_get_usecase',
             LOGIN_USER: 'login_user_usecase',
         }
     }

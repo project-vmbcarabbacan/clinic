@@ -3,13 +3,14 @@ const { withTransaction } = require('../../../infrastructure/database/mongoose')
 
 class UserController {
 
-    constructor(SignupUsecase, UserUpdateUsecase, UpdateOneUsecase, AchievementAddUsecase, AchievementEditUsecase, LoginUserUsecase) {
+    constructor(SignupUsecase, UserUpdateUsecase, UpdateOneUsecase, AchievementAddUsecase, AchievementEditUsecase, LoginUserUsecase, AchievementGet) {
         this.signupUsecase = SignupUsecase
         this.userUpdateUsecase = UserUpdateUsecase
         this.updateOneUsecase = UpdateOneUsecase
         this.achievementAddUsecase = AchievementAddUsecase
         this.achievementEditUsecase = AchievementEditUsecase
         this.loginUserUsecase = LoginUserUsecase
+        this.achievementGet = AchievementGet
 
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
@@ -18,6 +19,7 @@ class UserController {
         this.editAchievement = this.editAchievement.bind(this);
         this.getLoginUser = this.getLoginUser.bind(this);
         this.getUserById = this.getUserById.bind(this);
+        this.getAchievement = this.getAchievement.bind(this);
     }
 
     async getLoginUser(req, res) {
@@ -91,6 +93,15 @@ class UserController {
                 return await this.achievementEditUsecase.execute(req.body)
             });
             res.status(Constants.STATUS_CODES.SUCCESS).json({ message: Constants.MESSAGE.ACHIEVEMENT_EDIT })
+        } catch (error) {
+            res.status(Constants.STATUS_CODES.BAD_REQUEST).json({ message: `${Constants.STATUS_MESSAGE.BAD_REQUEST} : ${error.message}` })
+        }
+    }
+
+    async getAchievement(req, res) {
+        try {
+            const achievement = await this.achievementGet.execute(req.params.achievement_id)
+            res.status(Constants.STATUS_CODES.SUCCESS).json({ message: Constants.MESSAGE.ACHIEVEMENT_GET, data: { achievement } })
         } catch (error) {
             res.status(Constants.STATUS_CODES.BAD_REQUEST).json({ message: `${Constants.STATUS_MESSAGE.BAD_REQUEST} : ${error.message}` })
         }

@@ -20,6 +20,7 @@ const UserUpdate = require('../../domain/usecases/UserUpdate')
 const UpdateOne = require('../../domain/usecases/UpdateOne')
 const AchievementAdd = require('../../domain/usecases/AchievementAdd')
 const AchievementEdit = require('../../domain/usecases/AchievementEdit')
+const AchievementGet = require('../../domain/usecases/AchievementGet')
 const LoginUser = require('../../domain/usecases/LoginUser')
 
 /* domain\services */
@@ -97,11 +98,12 @@ container.register(Types.USECASE.USER_UPDATE, new UserUpdate(container.resolve(T
 container.register(Types.USECASE.UPDATE_ONE, new UpdateOne(container.resolve(Types.REPOSITORY.USER), container.resolve(Types.REPOSITORY.USER_LOG), container.resolve(Types.ENTITY.UPDATE_ONE), container.resolve(Types.ENTITY.USER_LOG)))
 container.register(Types.USECASE.ACHIEVEMENT_ADD, new AchievementAdd(container.resolve(Types.REPOSITORY.ACHIEVEMENT), container.resolve(Types.ENTITY.ACHIEVEMENT_ADD)))
 container.register(Types.USECASE.ACHIEVEMENT_EDIT, new AchievementEdit(container.resolve(Types.REPOSITORY.ACHIEVEMENT), container.resolve(Types.ENTITY.ACHIEVEMENT_EDIT)))
+container.register(Types.USECASE.ACHIEVEMENT_GET, new AchievementGet(container.resolve(Types.REPOSITORY.ACHIEVEMENT), container.resolve(Types.SERVICE.VALIDATOR)))
 container.register(Types.USECASE.LOGIN_USER, new LoginUser(container.resolve(Types.REPOSITORY.USER), container.resolve(Types.SERVICE.VALIDATOR)))
 
 /* controllers */
 container.register(Types.CONTROLLER.AUTH, new AuthController(container.resolve(Types.USECASE.LOGIN), container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.LOGOUT), container.resolve(Types.REPOSITORY.USER)))
-container.register(Types.CONTROLLER.USER, new UserController(container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.USER_UPDATE), container.resolve(Types.USECASE.UPDATE_ONE), container.resolve(Types.USECASE.ACHIEVEMENT_ADD), container.resolve(Types.USECASE.ACHIEVEMENT_EDIT), container.resolve(Types.USECASE.LOGIN_USER)))
+container.register(Types.CONTROLLER.USER, new UserController(container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.USER_UPDATE), container.resolve(Types.USECASE.UPDATE_ONE), container.resolve(Types.USECASE.ACHIEVEMENT_ADD), container.resolve(Types.USECASE.ACHIEVEMENT_EDIT), container.resolve(Types.USECASE.LOGIN_USER), container.resolve(Types.USECASE.ACHIEVEMENT_GET)))
 
 /* middlewares */
 container.register(Types.MIDDLEWARE.AUTHORIZATION, new AuthorizationMiddleware())
