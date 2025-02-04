@@ -16,7 +16,6 @@ class AchievementRepositoryImpl extends AchievementRepository {
             if (!achievement)
                 throw new Error('Achievement not exists')
 
-            console.log({achievement})
             return achievement
         } catch (error) {
             throw new Error(error.message)

@@ -26,6 +26,7 @@ const LoginUser = require('../../domain/usecases/LoginUser')
 /* domain\services */
 const ValidatorService = require('../../domain/services/ValidatorService')
 const DateService = require('../../domain/services/DateService')
+const ImageService = require('../../domain/services/ImageService')
 
 /* domain\entities */
 const LoginEntity = require('../../domain/entities/LoginEntity')
@@ -74,15 +75,16 @@ container.register(Types.MODEL.ACHIEVEMENT, AchievementModel)
 /* services */
 container.register(Types.SERVICE.VALIDATOR, new ValidatorService())
 container.register(Types.SERVICE.DATE, new DateService())
+container.register(Types.SERVICE.IMAGE, new ImageService())
 
 /* entities */
 container.register(Types.ENTITY.LOGIN, new LoginEntity(container.resolve(Types.SERVICE.VALIDATOR)))
 container.register(Types.ENTITY.SIGNUP, new SignupEntity(container.resolve(Types.SERVICE.VALIDATOR)))
 container.register(Types.ENTITY.USER, new UserEntity(container.resolve(Types.SERVICE.VALIDATOR), container.resolve(Types.SERVICE.DATE)))
 container.register(Types.ENTITY.USER_LOG, new UserLogEntity(container.resolve(Types.SERVICE.DATE)))
-container.register(Types.ENTITY.UPDATE_ONE, new UpdateOneEntity(container.resolve(Types.SERVICE.VALIDATOR)))
-container.register(Types.ENTITY.ACHIEVEMENT_ADD, new AchievementAddEntity())
-container.register(Types.ENTITY.ACHIEVEMENT_EDIT, new AchievementEditEntity())
+container.register(Types.ENTITY.UPDATE_ONE, new UpdateOneEntity(container.resolve(Types.SERVICE.VALIDATOR), container.resolve(Types.SERVICE.IMAGE)))
+container.register(Types.ENTITY.ACHIEVEMENT_ADD, new AchievementAddEntity(container.resolve(Types.SERVICE.IMAGE)))
+container.register(Types.ENTITY.ACHIEVEMENT_EDIT, new AchievementEditEntity(container.resolve(Types.SERVICE.IMAGE)))
 
 /* repositories */
 container.register(Types.REPOSITORY.AUTHENTICATION, new AuthenticationRepositoryImpl(container.resolve(Types.MODEL.USER), container.resolve(Types.MODEL.USER_INFORMATION)))

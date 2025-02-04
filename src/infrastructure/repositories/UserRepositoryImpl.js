@@ -1,4 +1,5 @@
 const UserRepository = require('../../application/repositories/UserRepository')
+const Constants = require('../utils/Constants')
 
 class UserRepositoryImpl extends UserRepository {
     constructor(UserModel, UserInformationModel, DateService) {
@@ -19,7 +20,7 @@ class UserRepositoryImpl extends UserRepository {
                 select: '-__v'
             })
             .select('-password')
-            .lean()
+            .exec()
 
         if (!user)
             throw new Error('User not found!')

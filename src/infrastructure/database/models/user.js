@@ -11,13 +11,24 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true, trim: true, lowercase: true },
     password: { type: String, required: true },
     status: { type: String, default: "Active" },
-    image: { type: String },
+    image: { 
+        type: String,
+        get: function(value) {
+            if(value) {
+                return url(`/${value}`)
+            }
+
+            return url('/uploads/default/profile.png')
+        }
+    },
     role: { type: Number },
     created_at: { type: String, default: cDate.now() },
     updated_at: { type: String, default: cDate.now() },
 });
 
 userSchema.set('toJSON', {
+    getters: true,
+    virtuals: true,
     transform: function (doc, ret, options) {
         delete ret.__v;
         delete ret.password;
@@ -66,6 +77,12 @@ userSchema.statics.usernameExist = async function (username, id) {
     const user = await this.findOne({ username, _id: { $ne: id } })
     return user ? true : false
 }
+
+// userSchema.virtual('image_url').get(function() {
+//     if(this.image) return url(this.image)
+
+//     return url('/uploads/default/profile.png')
+// })
 
 userSchema.virtual('information', {
     ref: 'User_information',

@@ -4,6 +4,10 @@ const path = require('path');
 
 class AchievementAddEntity {
 
+    constructor(ImageService) {
+        this.imageService = ImageService;
+    }
+
     setData({ user_id, title, description, date, image }) {
         this.user_id = user_id
         this.title = title
@@ -12,41 +16,19 @@ class AchievementAddEntity {
         this.image = image
     }
 
-    getData(image) {
+    async getData() {
         return {
             user_id: this.user_id,
             title: this.title,
             description: this.description,
             date: this.date,
-            image
+            image: await this.getImage()
         }
     }
     
-    getImage() {
+    async getImage() {
         try {
-            const mimeTypeMatch = this.image.match(/^data:(image\/([a-zA-Z]*))?;base64,/);
-
-            const base64Data = this.image.startsWith('data:image') ? this.image.split(',')[1] : this.image;
-            const buffer = Buffer.from(base64Data, 'base64')
-
-            const mimeType = mimeTypeMatch[1];
-            const extension = mimeType.split('/')[1];
-            const fileName = `image-${Date.now()}.${extension}`;
-
-            const filePath  = path.join(__dirname, '../../..', 'uploads', this.user_id, fileName)
-            const uploadsFolder  = path.join(__dirname, '../../..', 'uploads', this.user_id)
-            if (!fs.existsSync(uploadsFolder)) {
-              fsPromises.mkdir(uploadsFolder , { recursive: true });
-              } 
-
-            fs.writeFile(filePath, buffer, (err) => {
-                try {
-                    // 
-                } catch (error) {
-                    throw new Error('Error saving image')
-                }
-            });
-            return filePath;
+            return await this.imageService.uploadImage(this.image, this.user_id, 'uploads/achievements');
         } catch (error) {
             throw new Error(error.message)
         }

@@ -13,6 +13,7 @@ class Types {
         return {
             VALIDATOR: 'validator_service',
             DATE: 'date_service',
+            IMAGE: 'image_service',
         }
     }
 

@@ -6,6 +6,7 @@ class Constants {
             DATABASE: process.env.DATABASE,
             ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
             REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+            API_URL: process.env.API_URL,
             EXPIRES_ACCESS_TOKEN_SECRET_IN: '1',
             EXPIRES_REFRESH_TOKEN_SECRET_IN: '7',
             TOKEN_ALGORITHM: 'HS256',

@@ -22,12 +22,14 @@ class UpdateOne {
             const prev = await this.userRepository.findId(entity.id)
 
             let logData = null
+            let value = entity.value
             switch (entity.field) {
                 case 'password':
                     entity.validatePassword()
                     logData = log.changePassword()
                     break
                 case 'image':
+                    value = await entity.getImage()
                     logData = log.uploadAvatar()
                     break
                 case 'status':
@@ -44,7 +46,7 @@ class UpdateOne {
                     throw new Error('url does not exists')
             }
 
-            const user = await this.userRepository.changeOneField(entity.id, entity.field, entity.value)
+            const user = await this.userRepository.changeOneField(entity.id, entity.field, value)
 
             if (logData)
                 await this.userLogRepository.create(logData)

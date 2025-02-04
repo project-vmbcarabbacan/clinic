@@ -7,9 +7,9 @@ class AchievementEdit {
 
     async execute(achievementData) {
         const entity = this.achievementEditEntity
-        entity.setData(achievementData)
+        await entity.setData(achievementData)
 
-        await this.achievementRepository.update(entity.id, entity.setUpdate())
+        await this.achievementRepository.update(entity.id, await entity.setUpdate())
     }
 }
 

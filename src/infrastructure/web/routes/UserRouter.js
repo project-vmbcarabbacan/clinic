@@ -12,7 +12,7 @@ router.get('/user-by-id/:user_id', controller.getUserById);
 router.get('/achievement-by-id/:user_id/:achievement_id', controller.getAchievement);
 router.post('/create', adminRole.handle(), controller.create);
 router.post('/achievement-add', controller.addAchievement);
-router.patch('/change-:field', adminRole.handle(), controller.updateOneField);
+router.post('/change-:field', adminRole.handle(), controller.updateOneField);
 router.put('/update', controller.update);
 router.put('/achievement-edit', controller.editAchievement);
 

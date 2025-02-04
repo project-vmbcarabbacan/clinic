@@ -1,7 +1,8 @@
 class UpdateOneEntity {
 
-    constructor(ValidatorService) {
+    constructor(ValidatorService, ImageService) {
         this.validatorService = ValidatorService;
+        this.imageService = ImageService;
     }
 
     setData({ id, field, value }) {
@@ -38,6 +39,14 @@ class UpdateOneEntity {
             throw new Error("Invalid password");
         }
         return true;
+    }
+
+    async getImage() {
+        try {
+            return await this.imageService.uploadImage(this.value, this.id, 'uploads/avatar');
+        } catch (error) {
+            throw new Error(error.message)
+        }
     }
 
 }

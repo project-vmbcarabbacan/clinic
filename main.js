@@ -1,5 +1,7 @@
 require('dotenv').config();
+require('./src/infrastructure/helpers/helpers');
 const express = require('express')
+const path = require('path');
 const multer = require('multer');
 const { connectDatabase } = require('./src/infrastructure/database/mongoose')
 const Constants = require('./src/infrastructure/utils/Constants')
@@ -25,6 +27,7 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/', (req, res) => {
     res.send('Hello, World!');

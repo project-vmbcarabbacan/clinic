@@ -9,9 +9,8 @@ class AchievementAdd {
         try {
             const entity = this.achievementAddEntity
             entity.setData(achievementData)
-            const filePath = entity.getImage()
 
-            await this.achievementRepository.add(entity.getData(filePath))
+            await this.achievementRepository.add(entity.getData())
         } catch (error) {
             throw new Error(error.message);
         }
