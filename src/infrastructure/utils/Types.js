@@ -1,5 +1,11 @@
 class Types {
 
+    static get SOCKET() {
+        return {
+            SOCKET: 'io'
+        }
+    }
+
     static get MODEL() {
         return {
             USER: 'user_model',

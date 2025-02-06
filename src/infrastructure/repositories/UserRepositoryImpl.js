@@ -47,6 +47,7 @@ class UserRepositoryImpl extends UserRepository {
             if (!update)
                 throw new Error('User not founds')
 
+            io.emit(`user-${id}`, { user: update })
             return update
         } catch (error) {
             throw new Error(error.message)
