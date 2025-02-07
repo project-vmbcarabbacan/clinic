@@ -8,6 +8,7 @@ const Constants = require('./src/infrastructure/utils/Constants')
 const Types = require('./src/infrastructure/utils/Types')
 const authRoutes = require('./src/infrastructure/web/routes/AuthRouter')
 const userRoutes = require('./src/infrastructure/web/routes/UserRouter')
+const appointmentRoutes = require('./src/infrastructure/web/routes/AppointmentRouter')
 const container = require('./src/infrastructure/di/Container')
 const cors = require('cors')
 const { Server } = require("socket.io");
@@ -59,6 +60,7 @@ app.get('/', (req, res) => {
 
 app.use('/secure', authRoutes);
 app.use('/user', auth.handle(), userRoutes);
+app.use('/appointment', appointmentRoutes);
 
 
 (async () => {

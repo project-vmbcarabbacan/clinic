@@ -9,7 +9,7 @@ class AchievementGet {
         if(!isValidUserId)
             throw new Error('Invalid user id given')
         const isValidAchievementId = await this.validatorService.validateId(achievement_id)
-        if(!isValidUserId)
+        if(!isValidAchievementId)
             throw new Error('Invalid achievement id given')
 
         return await this.achievementRepository.findId(user_id, achievement_id)

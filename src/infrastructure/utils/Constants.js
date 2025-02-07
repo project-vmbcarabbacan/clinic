@@ -12,7 +12,8 @@ class Constants {
             TOKEN_ALGORITHM: 'HS256',
             ACCESS_TOKEN_OBJECT: process.env.ACCESS_TOKEN_OBJECT,
             TIMEZONE: process.env.TIMEZONE,
-            TIME_FORMAT: 'DD/MM/YYYY HH:mm'
+            TIME_FORMAT: 'DD/MM/YYYY HH:mm',
+            DATE_FORMAT: 'DD/MM/YYYY',
         }
     }
 
@@ -54,6 +55,19 @@ class Constants {
             ACHIEVEMENT_ADD: 'Achievement successfully added',
             ACHIEVEMENT_EDIT: 'Achievement successfully updated',
             ACHIEVEMENT_GET: 'Achievement successfully fetch',
+            APPOINTMENT_AVAILABLE: 'Available appointment successfully fetch!'
+        }
+    }
+
+    static get APPOINTMENT() {
+        return {
+            AVAILABLE_DAY: [1, 2, 3, 4, 5], // Monday - Friday
+            WEEK_START: 'Monday',
+            WEEK_END: 'Friday',
+            TIMING_START: 8, // starts at 8 AM
+            TIMING_END: 17, // ends at 5PM
+            TIMING_INTERVAL: 30, // Interval per hour
+            SLOTS: 5, // how many booking per slots
         }
     }
 }

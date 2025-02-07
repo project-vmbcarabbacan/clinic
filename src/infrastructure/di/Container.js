@@ -5,12 +5,14 @@ const UserModel = require('../database/models/user')
 const UserLogModel = require('../database/models/userLog')
 const UserInformationModel = require('../database/models/userInformation')
 const AchievementModel = require('../database/models/achievement')
+const AppointmentModel = require('../database/models/appointment')
 
 /* application\repositories */
 const AuthenticationRepositoryImpl = require("../repositories/AuthenticationRepositoryImpl")
 const UserLogRepositoryImpl = require("../repositories/UserLogRepositoryImpl")
 const UserRepositoryImpl = require("../repositories/UserRepositoryImpl")
 const AchievementRepositoryImpl = require("../repositories/AchievementRepositoryImpl")
+const AppointmentRepositoryImpl = require("../repositories/AppointmentRepositoryImpl")
 
 /* domain\usecases */
 const Login = require('../../domain/usecases/Login')
@@ -22,6 +24,8 @@ const AchievementAdd = require('../../domain/usecases/AchievementAdd')
 const AchievementEdit = require('../../domain/usecases/AchievementEdit')
 const AchievementGet = require('../../domain/usecases/AchievementGet')
 const LoginUser = require('../../domain/usecases/LoginUser')
+const AppointmentAvailableDays = require('../../domain/usecases/AppointmentAvailableDays')
+const AppointmentAvailableTime = require('../../domain/usecases/AppointmentAvailableTime')
 
 /* domain\services */
 const ValidatorService = require('../../domain/services/ValidatorService')
@@ -40,6 +44,7 @@ const AchievementEditEntity = require('../../domain/entities/AchievementEditEnti
 /* infrastructure\web\controllers */
 const AuthController = require('../web/controllers/AuthController')
 const UserController = require('../web/controllers/UserController')
+const AppointmentController = require('../web/controllers/AppointmentController')
 
 /* middlewares */
 const AuthorizationMiddleware = require('../middleware/AuthorizationMiddleware')
@@ -71,6 +76,7 @@ container.register(Types.MODEL.USER, UserModel)
 container.register(Types.MODEL.USER_LOG, UserLogModel)
 container.register(Types.MODEL.USER_INFORMATION, UserInformationModel)
 container.register(Types.MODEL.ACHIEVEMENT, AchievementModel)
+container.register(Types.MODEL.APPOINTMENT, AppointmentModel)
 
 /* services */
 container.register(Types.SERVICE.VALIDATOR, new ValidatorService())
@@ -91,6 +97,7 @@ container.register(Types.REPOSITORY.AUTHENTICATION, new AuthenticationRepository
 container.register(Types.REPOSITORY.USER_LOG, new UserLogRepositoryImpl(container.resolve(Types.MODEL.USER_LOG)))
 container.register(Types.REPOSITORY.USER, new UserRepositoryImpl(container.resolve(Types.MODEL.USER), container.resolve(Types.MODEL.USER_INFORMATION), container.resolve(Types.SERVICE.DATE)))
 container.register(Types.REPOSITORY.ACHIEVEMENT, new AchievementRepositoryImpl(container.resolve(Types.MODEL.ACHIEVEMENT)))
+container.register(Types.REPOSITORY.APPOINTMENT, new AppointmentRepositoryImpl(container.resolve(Types.MODEL.APPOINTMENT)))
 
 /* usecases */
 container.register(Types.USECASE.LOGIN, new Login(container.resolve(Types.REPOSITORY.AUTHENTICATION), container.resolve(Types.REPOSITORY.USER_LOG), container.resolve(Types.ENTITY.LOGIN), container.resolve(Types.ENTITY.USER_LOG)))
@@ -102,10 +109,13 @@ container.register(Types.USECASE.ACHIEVEMENT_ADD, new AchievementAdd(container.r
 container.register(Types.USECASE.ACHIEVEMENT_EDIT, new AchievementEdit(container.resolve(Types.REPOSITORY.ACHIEVEMENT), container.resolve(Types.ENTITY.ACHIEVEMENT_EDIT)))
 container.register(Types.USECASE.ACHIEVEMENT_GET, new AchievementGet(container.resolve(Types.REPOSITORY.ACHIEVEMENT), container.resolve(Types.SERVICE.VALIDATOR)))
 container.register(Types.USECASE.LOGIN_USER, new LoginUser(container.resolve(Types.REPOSITORY.USER), container.resolve(Types.SERVICE.VALIDATOR)))
+container.register(Types.USECASE.APPOINTMENT_AVAILABLE_DAYS, new AppointmentAvailableDays(container.resolve(Types.REPOSITORY.APPOINTMENT), container.resolve(Types.SERVICE.VALIDATOR)))
+container.register(Types.USECASE.APPOINTMENT_AVAILABLE_TIME, new AppointmentAvailableTime(container.resolve(Types.REPOSITORY.APPOINTMENT), container.resolve(Types.SERVICE.DATE), container.resolve(Types.SERVICE.VALIDATOR)))
 
 /* controllers */
 container.register(Types.CONTROLLER.AUTH, new AuthController(container.resolve(Types.USECASE.LOGIN), container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.LOGOUT), container.resolve(Types.REPOSITORY.USER)))
 container.register(Types.CONTROLLER.USER, new UserController(container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.USER_UPDATE), container.resolve(Types.USECASE.UPDATE_ONE), container.resolve(Types.USECASE.ACHIEVEMENT_ADD), container.resolve(Types.USECASE.ACHIEVEMENT_EDIT), container.resolve(Types.USECASE.LOGIN_USER), container.resolve(Types.USECASE.ACHIEVEMENT_GET)))
+container.register(Types.CONTROLLER.APPOINTMENT, new AppointmentController(container.resolve(Types.USECASE.APPOINTMENT_AVAILABLE_DAYS), container.resolve(Types.USECASE.APPOINTMENT_AVAILABLE_TIME)))
 
 /* middlewares */
 container.register(Types.MIDDLEWARE.AUTHORIZATION, new AuthorizationMiddleware())

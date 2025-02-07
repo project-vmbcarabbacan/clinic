@@ -12,6 +12,7 @@ class Types {
             USER_LOG: 'user_log_model',
             USER_INFORMATION: 'user_information_model',
             ACHIEVEMENT: 'achievement_model',
+            APPOINTMENT: 'appointment_model',
         }
     }
 
@@ -42,6 +43,7 @@ class Types {
             USER: 'user_repository_impl',
             USER_LOG: 'user_log_repository_impl',
             ACHIEVEMENT: 'achievement_repository_impl',
+            APPOINTMENT: 'appointment_repository_impl',
         }
     }
 
@@ -56,6 +58,8 @@ class Types {
             ACHIEVEMENT_EDIT: 'achievement_edit_usecase',
             ACHIEVEMENT_GET: 'achievement_get_usecase',
             LOGIN_USER: 'login_user_usecase',
+            APPOINTMENT_AVAILABLE_DAYS: 'appointment_available_days_usecase',
+            APPOINTMENT_AVAILABLE_TIME: 'appointment_available_time_usecase',
         }
     }
 
@@ -63,6 +67,7 @@ class Types {
         return {
             AUTH: 'auth_controller',
             USER: 'user_controller',
+            APPOINTMENT: 'appointment_controller',
         }
     }
 
