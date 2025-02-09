@@ -13,6 +13,7 @@ const UserLogRepositoryImpl = require("../repositories/UserLogRepositoryImpl")
 const UserRepositoryImpl = require("../repositories/UserRepositoryImpl")
 const AchievementRepositoryImpl = require("../repositories/AchievementRepositoryImpl")
 const AppointmentRepositoryImpl = require("../repositories/AppointmentRepositoryImpl")
+const WhatsappAppointmentRepositoryImpl = require("../repositories/WhatsappAppointmentRepositoryImpl")
 
 /* domain\usecases */
 const Login = require('../../domain/usecases/Login')
@@ -26,6 +27,7 @@ const AchievementGet = require('../../domain/usecases/AchievementGet')
 const LoginUser = require('../../domain/usecases/LoginUser')
 const AppointmentAvailableDays = require('../../domain/usecases/AppointmentAvailableDays')
 const AppointmentAvailableTime = require('../../domain/usecases/AppointmentAvailableTime')
+const AppointmentAdd = require('../../domain/usecases/AppointmentAdd')
 
 /* domain\services */
 const ValidatorService = require('../../domain/services/ValidatorService')
@@ -98,6 +100,7 @@ container.register(Types.REPOSITORY.USER_LOG, new UserLogRepositoryImpl(containe
 container.register(Types.REPOSITORY.USER, new UserRepositoryImpl(container.resolve(Types.MODEL.USER), container.resolve(Types.MODEL.USER_INFORMATION), container.resolve(Types.SERVICE.DATE)))
 container.register(Types.REPOSITORY.ACHIEVEMENT, new AchievementRepositoryImpl(container.resolve(Types.MODEL.ACHIEVEMENT)))
 container.register(Types.REPOSITORY.APPOINTMENT, new AppointmentRepositoryImpl(container.resolve(Types.MODEL.APPOINTMENT)))
+container.register(Types.REPOSITORY.WHATSAPP, new WhatsappAppointmentRepositoryImpl())
 
 /* usecases */
 container.register(Types.USECASE.LOGIN, new Login(container.resolve(Types.REPOSITORY.AUTHENTICATION), container.resolve(Types.REPOSITORY.USER_LOG), container.resolve(Types.ENTITY.LOGIN), container.resolve(Types.ENTITY.USER_LOG)))
@@ -111,11 +114,12 @@ container.register(Types.USECASE.ACHIEVEMENT_GET, new AchievementGet(container.r
 container.register(Types.USECASE.LOGIN_USER, new LoginUser(container.resolve(Types.REPOSITORY.USER), container.resolve(Types.SERVICE.VALIDATOR)))
 container.register(Types.USECASE.APPOINTMENT_AVAILABLE_DAYS, new AppointmentAvailableDays(container.resolve(Types.REPOSITORY.APPOINTMENT), container.resolve(Types.SERVICE.VALIDATOR)))
 container.register(Types.USECASE.APPOINTMENT_AVAILABLE_TIME, new AppointmentAvailableTime(container.resolve(Types.REPOSITORY.APPOINTMENT), container.resolve(Types.SERVICE.DATE), container.resolve(Types.SERVICE.VALIDATOR)))
+container.register(Types.USECASE.APPOINTMENT_ADD, new AppointmentAdd(container.resolve(Types.REPOSITORY.WHATSAPP)))
 
 /* controllers */
 container.register(Types.CONTROLLER.AUTH, new AuthController(container.resolve(Types.USECASE.LOGIN), container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.LOGOUT), container.resolve(Types.REPOSITORY.USER)))
 container.register(Types.CONTROLLER.USER, new UserController(container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.USER_UPDATE), container.resolve(Types.USECASE.UPDATE_ONE), container.resolve(Types.USECASE.ACHIEVEMENT_ADD), container.resolve(Types.USECASE.ACHIEVEMENT_EDIT), container.resolve(Types.USECASE.LOGIN_USER), container.resolve(Types.USECASE.ACHIEVEMENT_GET)))
-container.register(Types.CONTROLLER.APPOINTMENT, new AppointmentController(container.resolve(Types.USECASE.APPOINTMENT_AVAILABLE_DAYS), container.resolve(Types.USECASE.APPOINTMENT_AVAILABLE_TIME)))
+container.register(Types.CONTROLLER.APPOINTMENT, new AppointmentController(container.resolve(Types.USECASE.APPOINTMENT_AVAILABLE_DAYS), container.resolve(Types.USECASE.APPOINTMENT_AVAILABLE_TIME), container.resolve(Types.USECASE.APPOINTMENT_ADD)))
 
 /* middlewares */
 container.register(Types.MIDDLEWARE.AUTHORIZATION, new AuthorizationMiddleware())

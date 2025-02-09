@@ -14,6 +14,9 @@ class Constants {
             TIMEZONE: process.env.TIMEZONE,
             TIME_FORMAT: 'DD/MM/YYYY HH:mm',
             DATE_FORMAT: 'DD/MM/YYYY',
+            APP_SECRET: process.env.APP_SECRET,
+            PRIVATE_KEY: process.env.PRIVATE_KEY,
+            PASSPHRASE: process.env.PASSPHRASE,
         }
     }
 

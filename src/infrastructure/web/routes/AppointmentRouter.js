@@ -7,5 +7,6 @@ const controller = container.resolve(Types.CONTROLLER.APPOINTMENT);
 
 router.get('/available-days', controller.getAvailableDays);
 router.get('/available-time', controller.getAvailableTime);
+router.post('/data', controller.addAppointment)
 
 module.exports = router

@@ -9,6 +9,7 @@ const Types = require('./src/infrastructure/utils/Types')
 const authRoutes = require('./src/infrastructure/web/routes/AuthRouter')
 const userRoutes = require('./src/infrastructure/web/routes/UserRouter')
 const appointmentRoutes = require('./src/infrastructure/web/routes/AppointmentRouter')
+const whatsapp = require('./src/infrastructure/web/routes/WhatsappRouter')
 const container = require('./src/infrastructure/di/Container')
 const cors = require('cors')
 const { Server } = require("socket.io");
@@ -39,7 +40,12 @@ const io = new Server(server, {
 
   global.io = io;
 
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ 
+  verify: (req, res, buf, encoding) => {
+    req.rawBody = buf?.toString(encoding || "utf8");
+  },
+  limit: '50mb',
+ }));
 const corsOptions = {
     origin: 'http://localhost:8081', // Replace with your Vue app's URL
     credentials: true,
@@ -61,6 +67,7 @@ app.get('/', (req, res) => {
 app.use('/secure', authRoutes);
 app.use('/user', auth.handle(), userRoutes);
 app.use('/appointment', appointmentRoutes);
+app.use('/whatsapp', whatsapp);
 
 
 (async () => {
