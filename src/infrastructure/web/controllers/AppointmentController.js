@@ -32,7 +32,7 @@ class AppointmentController {
     async addAppointment(req, res) {
         try {
             const data = await this.appointmentAdd.execute(req)
-            res.send(data)
+            res.status(200).send('webhook processed')
         } catch (error) {
             res.status(Constants.STATUS_CODES.BAD_REQUEST).json({ message: `${error.message}` })
         }

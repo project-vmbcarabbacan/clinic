@@ -14,9 +14,13 @@ class Constants {
             TIMEZONE: process.env.TIMEZONE,
             TIME_FORMAT: 'DD/MM/YYYY HH:mm',
             DATE_FORMAT: 'DD/MM/YYYY',
+            DATE_APPOINTMENT_FORMAT: 'YYYY-MM-DDTHH:mm:ss',
             APP_SECRET: process.env.APP_SECRET,
             PRIVATE_KEY: process.env.PRIVATE_KEY,
             PASSPHRASE: process.env.PASSPHRASE,
+            WHATASAPP_MESSAGE_URL: process.env.WHATASAPP_MESSAGE_URL,
+            WHATSAPP_VERIFY_TOKEN: process.env.WHATSAPP_VERIFY_TOKEN,
+            WHATSAPP_ACCESS_TOKEN: process.env.WHATSAPP_ACCESS_TOKEN,
         }
     }
 
@@ -68,8 +72,8 @@ class Constants {
             WEEK_START: 'Monday',
             WEEK_END: 'Friday',
             TIMING_START: 8, // starts at 8 AM
-            TIMING_END: 17, // ends at 5PM
-            TIMING_INTERVAL: 30, // Interval per hour
+            TIMING_END: 18, // ends at 5PM
+            TIMING_INTERVAL: 60, // Interval per hour
             SLOTS: 5, // how many booking per slots
         }
     }

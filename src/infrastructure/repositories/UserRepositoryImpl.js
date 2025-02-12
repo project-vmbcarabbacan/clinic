@@ -1,5 +1,6 @@
 const UserRepository = require('../../application/repositories/UserRepository')
 const Constants = require('../utils/Constants')
+const Users = require('../utils/Users')
 
 class UserRepositoryImpl extends UserRepository {
     constructor(UserModel, UserInformationModel, DateService) {
@@ -145,6 +146,70 @@ class UserRepositoryImpl extends UserRepository {
         }
     }
 
+    async getUserByPhoneNumber(phoneNumber) {
+        try {
+            return await this.userInformationModel.findOne({
+                contact_number: { $elemMatch: { number: phoneNumber } },
+              }).populate("user_id")
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    async addCustomer(customerData) {
+        try {
+            const exists = await this.getUserByPhoneNumber(customerData.wa_id)
+            if(exists) return exists
+
+            const random = this.generateRandomString()
+            const customer = new this.userModel({
+                name: customerData.profile.name,
+                role: Users.CUSTOMER,
+                username: random,
+                password: random,
+                email: random
+            })
+
+            await customer.save()
+
+            const userInformation = new this.userInformationModel({
+                user_id: customer._id,
+                status_type: 'Whatsapp',
+                title: '',
+                address: '',
+                biography: '',
+                contact_number: [
+                    {
+                        number: customerData.wa_id
+                    }
+                ],
+                tokens: []
+            })
+            await userInformation.save()
+
+            return await this.getUserByPhoneNumber(customerData.wa_id)
+
+        } catch (error) {
+            console.log({error: error.message})
+            throw new Error(error.message)
+        }
+    }
+
+    generateRandomString(length = 12) {
+        const lettersNumbers = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        const specialChars = "!@#$%^&*()-_=+[]{}|;:,.<>?/";
+      
+        // Ensure at least one special character
+        let randomString = Array.from({ length: length - 1 }, () => 
+          lettersNumbers[Math.floor(Math.random() * lettersNumbers.length)]
+        ).join("");
+      
+        // Add a random special character at a random position
+        const specialChar = specialChars[Math.floor(Math.random() * specialChars.length)];
+        const position = Math.floor(Math.random() * length);
+        
+        return randomString.slice(0, position) + specialChar + randomString.slice(position);
+      }
 }
 
 module.exports = UserRepositoryImpl;

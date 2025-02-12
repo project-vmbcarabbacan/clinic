@@ -114,7 +114,7 @@ container.register(Types.USECASE.ACHIEVEMENT_GET, new AchievementGet(container.r
 container.register(Types.USECASE.LOGIN_USER, new LoginUser(container.resolve(Types.REPOSITORY.USER), container.resolve(Types.SERVICE.VALIDATOR)))
 container.register(Types.USECASE.APPOINTMENT_AVAILABLE_DAYS, new AppointmentAvailableDays(container.resolve(Types.REPOSITORY.APPOINTMENT), container.resolve(Types.SERVICE.VALIDATOR)))
 container.register(Types.USECASE.APPOINTMENT_AVAILABLE_TIME, new AppointmentAvailableTime(container.resolve(Types.REPOSITORY.APPOINTMENT), container.resolve(Types.SERVICE.DATE), container.resolve(Types.SERVICE.VALIDATOR)))
-container.register(Types.USECASE.APPOINTMENT_ADD, new AppointmentAdd(container.resolve(Types.REPOSITORY.WHATSAPP)))
+container.register(Types.USECASE.APPOINTMENT_ADD, new AppointmentAdd(container.resolve(Types.REPOSITORY.WHATSAPP), container.resolve(Types.REPOSITORY.USER), container.resolve(Types.USECASE.APPOINTMENT_AVAILABLE_DAYS), container.resolve(Types.USECASE.APPOINTMENT_AVAILABLE_TIME), container.resolve(Types.SERVICE.DATE)))
 
 /* controllers */
 container.register(Types.CONTROLLER.AUTH, new AuthController(container.resolve(Types.USECASE.LOGIN), container.resolve(Types.USECASE.SIGNUP), container.resolve(Types.USECASE.LOGOUT), container.resolve(Types.REPOSITORY.USER)))

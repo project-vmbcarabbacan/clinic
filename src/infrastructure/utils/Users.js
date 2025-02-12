@@ -3,6 +3,7 @@ class Users {
     static ADMIN = 1
     static RECEPTION = 2
     static DOCTOR = 3
+    static CUSTOMER = 4
 
     static get ROLES() {
         return [

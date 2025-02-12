@@ -19,6 +19,14 @@ class UserRepository {
         throw new Error("Method 'deleteToken()' must be implemented.");
     }
 
+    getUserByPhoneNumber(phoneNumber) {
+        throw new Error("Method 'getUserByPhoneNumber()' must be implemented.");
+    }
+
+    async addCustomer(customerData) {
+        throw new Error("Method 'addCustomer()' must be implemented.");
+    }
+
 }
 
 module.exports = UserRepository;
