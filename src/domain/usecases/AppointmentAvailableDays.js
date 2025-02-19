@@ -86,10 +86,10 @@ class AppointmentAvailableDays {
 
       if (hasAvailableSlots.length == 0) {
         const data = { year }
-        if (month) data.month = month++
-        if (week) data.week = week++
+        if (month) data.month = Number(month) + 1
+        if (week) data.week = Number(week) + 1
 
-        await this.execute(data)
+        return await this.execute(data)
       }
 
       return {

@@ -156,7 +156,7 @@ class WhatsappAppointmentRepositoryImpl extends WhatsappAppointmentRepository {
         return axios
     }
 
-    setStartConversation(name) {
+    setStartConversation(name, role) {
         return {
             type: 'list',
             header: {
@@ -171,15 +171,39 @@ class WhatsappAppointmentRepositoryImpl extends WhatsappAppointmentRepository {
                 sections: [
                     {
                         title: '',
-                        rows: [
-                            {
-                                id: 'conversation_appointment',
-                                title: 'Set Appointment',
-                            },
-                        ]
+                        rows: this.setStartConversationActions()[role]
                     }
                 ]
             }
+        }
+    }
+
+    setStartConversationActions() {
+        return {
+            4: [
+                {
+                    id: 'conversation_appointment',
+                    title: 'Book Appointment',
+                },
+                {
+                    id: 'conversation_view',
+                    title: 'View Appointment',
+                },
+                {
+                    id: 'conversation_update',
+                    title: 'Update Information',
+                },
+            ],
+            3: [
+                {
+                    id: 'schedule_view',
+                    title: 'View Schedules'
+                },
+                {
+                    id: 'conversation_update',
+                    title: 'Update Information',
+                },
+            ]
         }
     }
 

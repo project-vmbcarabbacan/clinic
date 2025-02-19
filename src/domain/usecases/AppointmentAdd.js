@@ -41,7 +41,7 @@ class AppointmentAdd {
                             reply = message.id
                         }
                         else if (message.text.body.toLowerCase() === 'hi') {
-                            body = this.whatsappAppointment.setStartConversation(userInformation.user_id.name)
+                            body = this.whatsappAppointment.setStartConversation(userInformation.user_id.name, userInformation.user_id.role)
                             type = 'interactive'
                             reply = null
                         }
@@ -59,11 +59,13 @@ class AppointmentAdd {
                                 type = 'interactive'
                                 reply = null
                             }
+                            else if (message.interactive.list_reply.id.includes('conversation_view')) {
+                                body = { body: 'Your schedule is on' }
+                                type = 'interactive'
+                                reply = null
+                            }
                             else if (message.interactive.list_reply.id.includes('available_date')) {
-                                console.log(JSON.stringify(message))
                                 const times = await this.time.execute(message.interactive.list_reply.title)
-                                console.log({ date: message.interactive.list_reply.title })
-                                console.log({ times })
                                 body = this.whatsappAppointment.setAppointmentTime(times)
                                 type = 'interactive'
                                 reply = null
